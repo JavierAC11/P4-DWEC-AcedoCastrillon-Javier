@@ -4,10 +4,12 @@ import Contact from "../pages/Contact";
 import Login from "../pages/Login";
 import UserProfile from "../pages/UserProfile";
 import NotFound from "../pages/NotFound";
+import LayoutPublic from "../layouts/LayoutPublic";
 
 export const router = createBrowserRouter([
     {
         path: "/",
+        element: <LayoutPublic />,
         errorElement : <NotFound />,
         children: [
             {
