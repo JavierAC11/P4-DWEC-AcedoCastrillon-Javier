@@ -1,9 +1,11 @@
-# React + Vite
+### Estructura del Proyecto
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+El proyecto está organizado de la siguiente manera:
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-# P4-DWEC-AcedoCastrillon-Javier
+- `src/`
+    - `components/`: Contiene los componentes reutilizables de la aplicación.
+    - `layouts/`: Incluye los diseños y estructuras de página, que contendra una para cuando este iniciada la sesion del ususario y otra para cuando no.
+    - `pages/`: Contiene las diferentes páginas de la aplicación.
+    - `router/`: Maneja las rutas de la aplicación.
+    - `index.css`: Archivo de estilos globales.
+    - `main.jsx`: Punto de entrada principal de la aplicación.

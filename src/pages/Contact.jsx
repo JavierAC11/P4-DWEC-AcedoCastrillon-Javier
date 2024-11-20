@@ -1,5 +1,6 @@
 import { useState } from "react";
 import MensajeError from "../components/MensajeError";
+import Swal from 'sweetalert2'
 
 
 
@@ -58,6 +59,38 @@ const Contact = () => {
   }}
 
   } 
+
+  const showError = () => {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Todos los campos son obligatorios",
+      confirmButtonText: "Aceptar"
+    });
+}
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (contacto.nombre.trim().length === 0 || contacto.email.trim().length === 0 || contacto.mensaje.trim().length === 0) {
+      showError();
+    }
+    else{
+      setContacto({
+        nombre: "",
+        email: "",
+        mensaje: ""
+      });
+      setError({
+        nombreError: false,
+        emailError: false,
+        mensajeError: false
+      });
+      document.getElementById("nombre").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("mensaje").value = "";
+    }
+  }
+    
   
     return (
       <div className="container mt-5">
@@ -69,13 +102,13 @@ const Contact = () => {
 
                   <label className="form-label">Correo Electrónico</label>
                   <input type="email" className="form-control" id="email" name="email" placeholder="ejemplo@ejemplo.com" onBlur={handleChange}/>
-                  {error.emailError && <MensajeError error="Debe de ser un email"/>}
+                  {error.emailError && <MensajeError error="Debe de ser un email"/>}  
                   
                   <label htmlFor="mensaje" className="form-label">Mensaje</label>
                   <textarea className="form-control" id="mensaje" name="mensaje" rows="4" placeholder="Escribe tu mensaje" onBlur={handleChange}></textarea>
                   {error.mensajeError && <MensajeError error="El mensaje es obligatorio"/>}
 
-              <button type="submit" className="btn btn-primary">Enviar</button>
+              <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Enviar</button>
           </form>
       </div>
   );
