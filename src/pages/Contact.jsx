@@ -7,6 +7,10 @@ import Swal from 'sweetalert2'
 
 const Contact = () => {
 
+
+  /**
+   * Uso un estado para guardar los datos del formulario y otro para guardar los errores para en el formulario poner o no el mensaje de error.
+   */
   const [error, setError] = useState({
     nombreError: false,
     emailError: false,
@@ -20,6 +24,11 @@ const Contact = () => {
   })
   
 
+  /**
+   * @param {Event} e
+   * 
+   * Comprueba si el campo de nombre, email o mensaje están vacíos o si el email no es válido. 
+   */
   const handleChange = (e) => {
     if (e.target.name === "email") {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

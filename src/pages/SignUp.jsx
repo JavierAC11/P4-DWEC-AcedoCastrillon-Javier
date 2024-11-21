@@ -1,9 +1,9 @@
 import { useState } from "react"
 import MensajeError from "../components/MensajeError"
+import Swal from 'sweetalert2'
 
 const SignUp = () => {
 
-  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState({
     nombreError: false,
     emailError: false,
@@ -163,9 +163,46 @@ const SignUp = () => {
   }
 }
 
+const showError = () => {
+  Swal.fire({
+    icon: "error",
+    title: "Error",
+    text: "Todos los campos son obligatorios",
+    confirmButtonText: "Aceptar"
+  });
+}
+
   const handleSubmit = (e) => {
     e.preventDefault()
+    if(form.nombre === "" || form.email === "" || form.numero === "" || form.fecha === "" || form.password === "" || form.terminos === false){
+      showError()
+    }
+    else{
+      console.log(form)
+      setForm({
+        nombre: "",
+        email: "",
+        numero: "",
+        fecha: "",
+        password: "",
+        terminos: false
+      })
+      setError({
+        nombreError: false,
+        emailError: false,
+        numeroError: false,
+        fechaError: false,
+        passwordError: false,
+        terminosError: false
+      })
+      document.getElementById("nombre").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("numero").value = "";
+      document.getElementById("edad").value = "";
+      document.getElementById("password").value = "";
+      document.getElementById("terminos").checked = false;
   }
+}
 
   return (
     <div className="container mt-5">

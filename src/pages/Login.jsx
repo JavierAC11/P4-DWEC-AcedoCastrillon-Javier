@@ -23,7 +23,9 @@ const Login = () => {
 
                   ¿No tienes cuenta? <Link to="/signup">Registrate</Link>
 
-              <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Enviar</button>
+              <p>
+                <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Enviar</button>
+              </p>
           </form>
       </div>
   )
