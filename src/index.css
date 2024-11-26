@@ -120,3 +120,20 @@ button.btn-primary:active {
   margin-top: -10px;
   margin-bottom: 10px;
 }
+
+
+.makes-grid {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos salten a una nueva fila */
+  gap: 20px; /* Espaciado entre los elementos */
+}
+
+.make-item {
+  flex: 0 1 calc(50% - 10px); /* Ocupa el 50% del ancho menos el espacio del gap */
+  box-sizing: border-box; /* Asegura que el padding y border no alteren el tamaño */
+  background-color: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+  border-radius: 5px;
+}
