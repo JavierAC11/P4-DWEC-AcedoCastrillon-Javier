@@ -1,6 +1,7 @@
 import { useState } from "react"
 import MensajeError from "../components/MensajeError"
 import Swal from 'sweetalert2'
+import { loginFirebase, registro } from "../config/firebase"
 
 const SignUp = () => {
 
@@ -172,36 +173,43 @@ const showError = () => {
   });
 }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if(form.nombre === "" || form.email === "" || form.numero === "" || form.fecha === "" || form.password === "" || form.terminos === false){
       showError()
     }
     else{
-      console.log(form)
-      setForm({
-        nombre: "",
-        email: "",
-        numero: "",
-        fecha: "",
-        password: "",
-        terminos: false
-      })
-      setError({
-        nombreError: false,
-        emailError: false,
-        numeroError: false,
-        fechaError: false,
-        passwordError: false,
-        terminosError: false
-      })
-      document.getElementById("nombre").value = "";
-      document.getElementById("email").value = "";
-      document.getElementById("numero").value = "";
-      document.getElementById("edad").value = "";
-      document.getElementById("password").value = "";
-      document.getElementById("terminos").checked = false;
-  }
+      try {
+        await registro({email: form.email, password: form.password})
+        await loginFirebase({email: form.email, password: form.password})
+        setForm({
+          nombre: "",
+          email: "",
+          numero: "",
+          fecha: "",
+          password: "",
+          terminos: false
+        })
+        setError({
+          nombreError: false,
+          emailError: false,
+          numeroError: false,
+          fechaError: false,
+          passwordError: false,
+          terminosError: false
+        })
+        document.getElementById("nombre").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("numero").value = "";
+        document.getElementById("edad").value = "";
+        document.getElementById("password").value = "";
+        document.getElementById("terminos").checked = false;
+      }
+      catch(error){
+        console.log(error)
+      }
+      
+    }
 }
 
   return (

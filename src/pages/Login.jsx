@@ -1,14 +1,19 @@
 import { Link } from "react-router-dom"
 import MensajeError from "../components/MensajeError"
 import { useState } from "react"
+import { useContext } from "react"
+import { UserContext } from "../context/UserContext"
+
 
 const Login = () => {
 
 // Aqui no veo necesario la validacion del formulario ya que el correo que se introduce puede que no este registrado
 // ya se mostraria el mensaje de error al ver que el correo no esta registrado o la contraseña es incorrecta
 
+  const { login } = useContext(UserContext)
 
-  const [login, setLogin] = useState({
+
+  const [datos, setDatos] = useState({
     email: "",
     password: ""
   })
@@ -19,14 +24,18 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    console.log(datos.email, datos.password)
+    login({email: datos.email, password: datos.password})
   }
+
+  // Prueba1*
 
   const handleChange = (e) => {
     if (e.target.name === "email") {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if (emailRegex.test(e.target.value)){
-        setLogin({
-          ...login,
+        setDatos({
+          ...datos,
           [e.target.name]: e.target.value
         })
         setError({
@@ -41,6 +50,12 @@ const Login = () => {
         })
     }
   }
+    else if (e.target.name === "password") {
+      setDatos({
+        ...datos,
+        [e.target.name]: e.target.value
+      })
+    }
 }
 
 
@@ -56,7 +71,7 @@ const Login = () => {
 
                   
                   <label htmlFor="password" className="form-label">Contraseña</label>
-                  <input type="password" className="form-control" id="password" name="password" rows="4" placeholder="Introduce tu contraseña"/>
+                  <input type="password" className="form-control" id="password" name="password" rows="4" placeholder="Introduce tu contraseña" onBlur={handleChange}/>
 
                   ¿No tienes cuenta? <Link to="/signup">Registrate</Link>
 

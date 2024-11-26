@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { auth, logOut, loginFirebase } from "../config/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 // Crear el contexto
 export const UserContext = createContext();
@@ -8,9 +10,38 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState("null");
 
+
+  useEffect(() => { 
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user)
+      } else {
+        setUser(null)
+      }
+    })
+  }
+  , [])
+
   // Funciones para actualizar el usuario
-  const login = (userData) => setUser(userData);
-  const logout = () => setUser(null);
+  const login = async (userData) => {
+    console.log(userData.email)
+
+    try{
+      console.log(userData.email, userData.password)
+      setUser(userData.email)
+      await loginFirebase({email: userData.email, password: userData.password})
+
+    }
+    catch(error){
+      console.log(error)
+    } 
+  };
+
+
+  const logout = () => {
+    setUser(null)
+    logOut()
+  };
 
   return (
     <UserContext.Provider value={{ user, login, logout }}>
