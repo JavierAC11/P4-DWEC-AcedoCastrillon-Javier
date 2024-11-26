@@ -3,6 +3,7 @@ import { lazy } from "react";
 import Home from "../pages/Home";
 import LayoutPublic from "../layouts/LayoutPublic";
 import { Suspense } from "react";
+import LayoutPrivate from "../layouts/LayoutPrivate";
 
 const Contact = lazy(() => import("../pages/Contact"));
 const Login = lazy(() => import("../pages/Login"));
@@ -65,6 +66,19 @@ export const router = createBrowserRouter([
                     </Suspense>
                 ),
             },
-        ],
+            {
+                path: "/userProfile",
+                element: <LayoutPrivate />,
+                children: [
+                    {
+                        index: true,
+                        element: <UserProfile />,
+                    },
+                ],
+                
+            },
+            
+        ]
     },
-]);
+        ],
+    );
