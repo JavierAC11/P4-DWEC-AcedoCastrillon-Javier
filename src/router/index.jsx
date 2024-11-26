@@ -1,40 +1,70 @@
 import { createBrowserRouter } from "react-router-dom";
+import { lazy } from "react";
 import Home from "../pages/Home";
-import Contact from "../pages/Contact";
-import Login from "../pages/Login";
-import UserProfile from "../pages/UserProfile";
-import NotFound from "../pages/NotFound";
 import LayoutPublic from "../layouts/LayoutPublic";
-import SignUp from "../pages/SignUp";
+import { Suspense } from "react";
+
+const Contact = lazy(() => import("../pages/Contact"));
+const Login = lazy(() => import("../pages/Login"));
+const UserProfile = lazy(() => import("../pages/UserProfile"));
+const NotFound = lazy(() => import("../pages/NotFound"));
+const SignUp = lazy(() => import("../pages/SignUp"));
+
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <LayoutPublic />,
-        errorElement : <NotFound />,
+        element: (
+            <Suspense fallback={<div>Loading...</div>}>
+                <LayoutPublic />
+            </Suspense>
+        ),
+        errorElement: (
+            <Suspense fallback={<div>Loading error page...</div>}>
+                <NotFound />
+            </Suspense>
+        ),
         children: [
             {
                 index: true,
-                element: <Home />
+                element: (
+                    <Suspense fallback={<div>Loading home...</div>}>
+                        <Home />
+                    </Suspense>
+                ),
             },
             {
                 path: "/contact",
-                element: <Contact />
+                element: (
+                    <Suspense fallback={<div>Loading contact...</div>}>
+                        <Contact />
+                    </Suspense>
+                ),
             },
             {
                 path: "/login",
-                element: <Login />
+                element: (
+                    <Suspense fallback={<div>Loading login...</div>}>
+                        <Login />
+                    </Suspense>
+                ),
             },
             {
                 path: "/userProfile",
-                element: <UserProfile />
+                element: (
+                    <Suspense fallback={<div>Loading profile...</div>}>
+                        <UserProfile />
+                    </Suspense>
+                ),
             },
             {
                 path: "/signUp",
-                element: <SignUp />
-            }
-        ]
-    }
-    
-    
-])
+                element: (
+                    <Suspense fallback={<div>Loading sign-up...</div>}>
+                        <SignUp />
+                    </Suspense>
+                ),
+            },
+        ],
+    },
+]);
