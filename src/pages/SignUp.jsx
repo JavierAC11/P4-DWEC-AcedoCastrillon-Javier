@@ -84,7 +84,7 @@ const SignUp = () => {
       [e.target.name]: e.target.value
     })
   }
-  //TODO: Validar que no este ya registrado
+
   else if(e.target.name === "email"){
     const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
     if (regexEmail.test(e.target.value)) {

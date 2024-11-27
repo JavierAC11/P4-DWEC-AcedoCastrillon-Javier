@@ -28,12 +28,13 @@ export const UserProvider = ({ children }) => {
 
     try{
       console.log(userData.email, userData.password)
-      setUser(userData.email)
+      
       await loginFirebase({email: userData.email, password: userData.password})
-
+      setUser(userData.email)
     }
     catch(error){
       console.log(error)
+      setUser(null)
     } 
   };
 

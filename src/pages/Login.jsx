@@ -3,6 +3,8 @@ import MensajeError from "../components/MensajeError"
 import { useState } from "react"
 import { useContext } from "react"
 import { UserContext } from "../context/UserContext"
+import Swal from 'sweetalert2'
+import { loginFirebase } from "../config/firebase"
 
 
 const Login = () => {
@@ -19,13 +21,27 @@ const Login = () => {
   })
 
   const [error, setError] = useState({
-    emailError: false
+    emailError: false,
+    passwordError: false
   })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     console.log(datos.email, datos.password)
     login({email: datos.email, password: datos.password})
+    try {
+      await loginFirebase({email: datos.email, password: datos.password})
+      
+    }
+    catch(error){
+      if (error.code === "auth/invalid-credential"){
+        showError("La contraseña o el correo es incorrecto")
+      }
+      else{
+        showError(error.message)
+      }
+      
+    }
   }
 
   // Prueba1*
@@ -51,12 +67,34 @@ const Login = () => {
     }
   }
     else if (e.target.name === "password") {
+      if (e.target.value === ""){
+        setError({
+          ...error,
+          [e.target.name + "Error"]: true
+        })
+      }
+      else{
+        setError({
+          ...error,
+          [e.target.name + "Error"]: false
+        })
       setDatos({
         ...datos,
         [e.target.name]: e.target.value
       })
     }
 }
+}
+
+const showError = (mensaje) => {
+  Swal.fire({
+    icon: "error",
+    title: "Error",
+    text: mensaje,
+    confirmButtonText: "Aceptar"
+  });
+}
+
 
 
   return (
@@ -72,6 +110,7 @@ const Login = () => {
                   
                   <label htmlFor="password" className="form-label">Contraseña</label>
                   <input type="password" className="form-control" id="password" name="password" rows="4" placeholder="Introduce tu contraseña" onBlur={handleChange}/>
+                  {error.passwordError && <MensajeError error="La contraseña no puede estar vacia"/>}  
 
                   ¿No tienes cuenta? <Link to="/signup">Registrate</Link>
 
