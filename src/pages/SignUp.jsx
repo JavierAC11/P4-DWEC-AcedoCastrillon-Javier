@@ -164,11 +164,11 @@ const SignUp = () => {
   }
 }
 
-const showError = () => {
+const showError = (mensaje) => {
   Swal.fire({
     icon: "error",
     title: "Error",
-    text: "Todos los campos son obligatorios",
+    text: mensaje,
     confirmButtonText: "Aceptar"
   });
 }
@@ -176,7 +176,7 @@ const showError = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if(form.nombre === "" || form.email === "" || form.numero === "" || form.fecha === "" || form.password === "" || form.terminos === false){
-      showError()
+      showError("Todos los campos son obligatorios")
     }
     else{
       try {
@@ -206,7 +206,13 @@ const showError = () => {
         document.getElementById("terminos").checked = false;
       }
       catch(error){
-        console.log(error)
+        if(error.code === "auth/email-already-in-use"){
+          showError("El correo ya esta en uso")
+        }
+        else{
+          showError(error.message)
+        }
+        
       }
       
     }
