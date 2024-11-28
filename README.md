@@ -76,5 +76,28 @@ Ya implementan el contexto y realizan el login y el registro de usuarios
 
 ### router/index
 
-
 Se ha implementado el lazy load en las paginas las cuales no tienen porque cargar cuando se inicia la aplicación o que no son tan relevantes y se ha implementado el layoutPrivate junto al UserProfile
+
+### Captura de la llamada asincrona
+
+![alt text](image.png)
+
+Aquí se usa la llamada asíncrona para obtener un JSON con todos los datos de las marcas.
+
+
+![alt text](image-1.png)
+
+
+Aquí se guardan las marcas en un estado al iniciar la página.
+
+
+![alt text](image-2.png)
+
+
+Aquí se muestra en el HTML
+
+
+![alt text](image-3.png)
+
+
+Aqui esta el ejemplo de la aplicación con la lista de marcas

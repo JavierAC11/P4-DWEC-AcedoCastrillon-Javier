@@ -9,9 +9,6 @@ import { loginFirebase } from "../config/firebase"
 
 const Login = () => {
 
-// Aqui no veo necesario la validacion del formulario ya que el correo que se introduce puede que no este registrado
-// ya se mostraria el mensaje de error al ver que el correo no esta registrado o la contraseña es incorrecta
-
   const { login } = useContext(UserContext)
 
 
