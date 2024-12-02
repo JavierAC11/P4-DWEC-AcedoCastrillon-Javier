@@ -5,6 +5,7 @@ import LayoutPublic from "../layouts/LayoutPublic";
 import { Suspense } from "react";
 import LayoutPrivate from "../layouts/LayoutPrivate";
 
+const Models = lazy(() => import("../pages/Models"));
 const Contact = lazy(() => import("../pages/Contact"));
 const Login = lazy(() => import("../pages/Login"));
 const UserProfile = lazy(() => import("../pages/UserProfile"));
@@ -66,6 +67,14 @@ export const router = createBrowserRouter([
                     </Suspense>
                 ),
             },
+            {
+                path: "/models/:id", // Ruta dinámica con parámetro id
+                element: (
+                  <Suspense fallback={<div>Loading models...</div>}>
+                    <Models />
+                  </Suspense>
+                ),
+              },
             {
                 path: "/userProfile",
                 element: <LayoutPrivate />,

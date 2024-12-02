@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 //API Diferente
 //RapidAPI Car Database with images
@@ -43,7 +44,9 @@ const Home = () => {
 
       {currentMakes.map((make) => (
           <div key={make.id} className="make-item">
-            <h2>{make.name}</h2>
+            <Link to={`/models/${make.name}`}>
+              <h2>{make.name}</h2>
+            </Link>
           </div>
         ))}
 

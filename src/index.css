@@ -52,7 +52,7 @@ nav .nav-button:active {
 }
 
 .container {
-  max-width: 600px; /* Ancho máximo del formulario */
+  max-width: 1000px; /* Ancho máximo del formulario */
   margin: 20px auto; /* Centramos la sección en la página y añadimos margen superior */
   margin-top: 5%;
   padding: 20px;
@@ -137,3 +137,52 @@ button.btn-primary:active {
   text-align: center;
   border-radius: 5px;
 }
+
+/* Contenedor de filtros */
+.filter-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: space-between; /* Asegura que el espacio entre elementos sea equilibrado */
+  align-items: center; /* Centra verticalmente los elementos */
+}
+
+/* Estilo de los inputs de filtro */
+.filter-container .form-control {
+  
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Estilo del botón de submit */
+.filter-container .btn-primary {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+/* Efecto hover en el botón */
+.filter-container .btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Efecto de clic en el botón */
+.filter-container .btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* Filtros cuando no están activos (opcional para mejor usabilidad) */
+.filter-container .form-control:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
