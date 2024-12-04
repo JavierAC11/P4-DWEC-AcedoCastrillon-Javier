@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, signOut } from "firebase/auth";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { getDocs, collection } from "firebase/firestore";
+import { getDoc } from "firebase/firestore";
 import { setDoc, doc } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -35,15 +35,21 @@ export const logOut = () => signOut(auth);
 
 const db = getFirestore(app);
 
-export async function getData() {
+export async function getDataById(id) {
   try {
-    const querySnapshot = await getDocs(collection(db, "Usuarios"));
-    querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} =>`, doc.data());
-    });
-  } catch (error) {
-    console.error("Error obteniendo documentos:", error);
-  }
+    const docRef = doc(db, "Usuarios", id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      console.log("No such document!");
+    }
+    
+} catch (error) {
+
+    console.log(error)
+}
+
 }
 
 export async function addElement(usuario, id) {
@@ -58,5 +64,3 @@ export async function addElement(usuario, id) {
       console.error("Error añadiendo documento:", error);
     }
   }
-
-getData();

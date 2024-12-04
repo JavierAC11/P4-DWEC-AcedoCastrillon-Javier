@@ -10,7 +10,6 @@ const Navbar = () => {
     
     //const { user, setUser } = useContext(UserContext);
 
-
     return (
         <nav className="navbar navbar-dark bg-dark">
             {!user && <div>

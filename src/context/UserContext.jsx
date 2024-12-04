@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from "react";
-import { auth, logOut, loginFirebase } from "../config/firebase";
+import { auth, getDataById, logOut, loginFirebase } from "../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 export const UserContext = createContext();
@@ -8,12 +8,14 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  console.log(user)
-
   useEffect(() => { 
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUser(user)
+        getDataById(user.uid).then((data) => {
+          setUser(data),
+          console.log(data)
+        }
+        )
       } else {
         setUser(null)
       }
@@ -24,8 +26,14 @@ export const UserProvider = ({ children }) => {
   const login = async (userData) => {
 
     try{
-      console.log(userData)
-      setUser(userData.email)
+      loginFirebase(userData).then((u) => {
+        getDataById(u.user.uid).then((data) => {
+          setUser(data),
+          console.log(data)
+        }
+        )
+      }
+      )
     }
     catch(error){
       console.log(error)
