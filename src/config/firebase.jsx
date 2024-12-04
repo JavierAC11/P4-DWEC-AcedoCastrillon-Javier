@@ -2,6 +2,9 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signOut } from "firebase/auth";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getDocs, collection } from "firebase/firestore";
+import { setDoc, doc } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -29,3 +32,31 @@ export const registro = ({email, password}) => {
 }
 
 export const logOut = () => signOut(auth);
+
+const db = getFirestore(app);
+
+export async function getData() {
+  try {
+    const querySnapshot = await getDocs(collection(db, "Usuarios"));
+    querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} =>`, doc.data());
+    });
+  } catch (error) {
+    console.error("Error obteniendo documentos:", error);
+  }
+}
+
+export async function addElement(usuario, id) {
+    try {
+      await setDoc(doc(db, "Usuarios", id), {
+        nombre: usuario.nombre,
+        correo: usuario.correo,
+        telefono: usuario.telefono
+      });
+      console.log("Documento añadido con ID personalizado:", id);
+    } catch (error) {
+      console.error("Error añadiendo documento:", error);
+    }
+  }
+
+getData();

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { getData } from "../config/firebase";
 
 //API Diferente
 //RapidAPI Car Database with images
@@ -18,6 +19,8 @@ const Home = () => {
   const token = "daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
 
   const getMakes = async () => {
+    getData();
+
     const response = await fetch(url + "/makes?api_key=" + token);
     const data = await response.json();
     return data;

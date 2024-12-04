@@ -25,7 +25,6 @@ export const UserProvider = ({ children }) => {
 
     try{
       console.log(userData)
-      await loginFirebase({email: userData.email, password: userData.password})
       setUser(userData.email)
     }
     catch(error){
