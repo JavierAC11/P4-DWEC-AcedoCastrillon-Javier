@@ -173,6 +173,7 @@ const showError = (mensaje) => {
   });
 }
 
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     if(form.nombre === "" || form.email === "" || form.numero === "" || form.fecha === "" || form.password === "" || form.terminos === false){

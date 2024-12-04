@@ -4,16 +4,21 @@ import { useEffect, useState } from "react";
 const Models = () => {
   const { id } = useParams();
   const [models, setModels] = useState([]);
+  
+// TODO Filtrado por traccion
   const [filteredModels, setFilteredModels] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 20;
 
+  const [filterDoors, setFilteredDoors] = useState("");
   const [filterModel, setFilterModel] = useState('');
-  const [filterTrim, setFilterTrim] = useState('');
+ const [filterDrivetrain, setFilterDrivetrain] = useState('')
   const [filterYear, setFilterYear] = useState('');
 
   const handleFilter = () => {
     let filteredData = models;
+
+    console.log(filterDrivetrain)
 
     if (filterModel) {
       filteredData = filteredData.filter(model =>
@@ -21,9 +26,10 @@ const Models = () => {
       );
     }
 
-    if (filterTrim) {
+    if (filterDoors) {
+
       filteredData = filteredData.filter(model =>
-        model.trim.toLowerCase().includes(filterTrim.toLowerCase())
+        model.num_doors === filterDoors
       );
     }
 
@@ -33,6 +39,20 @@ const Models = () => {
       );
     }
 
+    if (filterDrivetrain) {
+      console.log(filterDrivetrain)
+      filteredData = filteredData.filter(model =>
+        model.drivetrain === filterDrivetrain
+      )
+      console.log(filteredData)
+
+    }
+
+    if (!filterModel && !filterDrivetrain && !filterYear && !filterDoors) {
+      filteredData = models
+    }
+
+    setCurrentPage(1);
     setFilteredModels(filteredData);
   };
 
@@ -49,7 +69,9 @@ const Models = () => {
         setModels([{ model_name: "No hay modelos", trim: "", id: 1 }]);
         setFilteredModels([{ model_name: "No hay modelos", trim: "", id: 1 }]);
       }
-    };
+    }
+    
+    ;
 
     fetchModels();
   }, [id]);
@@ -66,23 +88,62 @@ const Models = () => {
         <input
           type="text"
           className="form-control"
-          placeholder="Filtrar por modelo..."
+          placeholder="Modelo"
           value={filterModel}
           onChange={(e) => setFilterModel(e.target.value)}
         />
-        <input
-          type="text"
+        <select
           className="form-control"
-          placeholder="Filtrar por trim..."
-          value={filterTrim}
-          onChange={(e) => setFilterTrim(e.target.value)}
-        />
+          value={filterDrivetrain}
+          onChange={(e) => setFilterDrivetrain(e.target.value)}
+        >
+          <option value="">Eje de traccion</option>
+              <option value={"RWD"}>
+                RWD
+              </option>
+              <option value={"AWD"}>
+                AWD
+              </option>
+              <option value={"FWD"}>
+                FWD
+              </option>
+              <option value={"4x4"}>
+                4x4
+              </option>
+              <option value={"4x2"}>
+                4x2
+              </option>
+        </select>
+
+        <select
+          className="form-control"
+          value={filterDoors}
+          onChange={(e) => setFilteredDoors(e.target.value)}
+        >
+          <option value="">Numero de puertas</option>
+              <option value={"2"}>
+                2
+              </option>
+              <option value={"3"}>
+                3
+              </option>
+              <option value={"4"}>
+                4
+              </option>
+              <option value={"5"}>
+                5
+              </option>
+              <option value={"6"}>
+                6
+              </option>
+        </select>
+
         <select
           className="form-control"
           value={filterYear}
           onChange={(e) => setFilterYear(e.target.value)}
         >
-          <option value="">Seleccione un año</option>
+          <option value="">Año</option>
           {Array.from({ length: 30 }, (_, index) => {
             const year = new Date().getFullYear() - index;
             return (
@@ -105,7 +166,7 @@ const Models = () => {
       <div className="makes-grid">
         {currentModels.map((model) => (
           <div key={model.id} className="make-item">
-            <h2>{`${model.model_name} ${model.trim} ${model.year}`}</h2>
+            <h2>{`${model.model_name} ${model.trim}`}</h2>
           </div>
         ))}
       </div>

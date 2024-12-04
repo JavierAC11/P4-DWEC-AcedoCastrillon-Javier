@@ -29,7 +29,7 @@ const Home = () => {
 
   useEffect(() => {
     getMakes().then((data) => setMakes(data));
-  })
+  }, []);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;

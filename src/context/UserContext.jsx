@@ -3,13 +3,12 @@ import { createContext, useEffect, useState } from "react";
 import { auth, logOut, loginFirebase } from "../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
-// Crear el contexto
 export const UserContext = createContext();
 
-// Proveedor del contexto
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState("null");
+  const [user, setUser] = useState(null);
 
+  console.log(user)
 
   useEffect(() => { 
     onAuthStateChanged(auth, (user) => {
@@ -22,13 +21,10 @@ export const UserProvider = ({ children }) => {
   }
   , [])
 
-  // Funciones para actualizar el usuario
   const login = async (userData) => {
-    console.log(userData.email)
 
     try{
-      console.log(userData.email, userData.password)
-      
+      console.log(userData)
       await loginFirebase({email: userData.email, password: userData.password})
       setUser(userData.email)
     }

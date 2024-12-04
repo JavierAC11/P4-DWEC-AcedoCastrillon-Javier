@@ -24,7 +24,6 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(datos.email, datos.password)
     login({email: datos.email, password: datos.password})
     try {
       await loginFirebase({email: datos.email, password: datos.password})
