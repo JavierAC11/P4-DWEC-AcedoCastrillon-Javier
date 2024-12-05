@@ -70,10 +70,10 @@ export const router = createBrowserRouter([
   },
   {
     path: "/userProfile",
-    element: <LayoutPrivate />, // Layout para rutas privadas
-    children: [
+    element: <LayoutPrivate />,
+        children: [
       {
-        index: true, // Define esta ruta como la predeterminada
+        index: true,
         element: (
           <Suspense fallback={<div>Loading profile...</div>}>
             <UserProfile />

@@ -2,6 +2,7 @@ import { Navigate, Outlet } from "react-router-dom"
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const LayoutPrivate = () => {
 
@@ -9,13 +10,12 @@ const LayoutPrivate = () => {
     
 
   return (
-    <div>
+    <div className="main-content">
 
         <Navbar />
         <Outlet />
-        <footer className="bg-dark text-white py-4 mt-auto">Footer</footer>
         {!user && <Navigate to="/" />}
-        
+        <Footer />        
     </div>
   )
 }

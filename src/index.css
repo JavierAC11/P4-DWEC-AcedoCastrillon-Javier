@@ -1,105 +1,127 @@
-/* Oculta los botones de incremento y decremento en los input de tipo number */
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* Para Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+}
+
+#root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 body {
   margin: 0;
   padding: 0;
   font-family: 'Arial', sans-serif;
-  background-color: #e0e0e0; /* Fondo gris claro */
-  color: #333; /* Texto gris oscuro */
+  background-color: #e0e0e0;
+  color: #333; 
   line-height: 1.6;
 }
 
 nav {
-  background-color: #4f4f4f; /* Color de fondo gris oscuro */
-  color: #fff; /* Color del texto */
+  background-color: #4f4f4f; 
+  color: #fff;
   display: flex;
-  justify-content: space-between; /* Espaciado entre elementos */
-  align-items: center; /* Alineación vertical */
-  padding: 10px 20px; /* Espaciado interno */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  justify-content: space-between;
+  align-items: center; 
+  padding: 10px 20px; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 nav .nav-button {
-  background-color: #ffffff; /* Fondo del botón */
-  color: #4f4f4f; /* Texto gris oscuro */
-  border: 2px solid #4f4f4f; /* Borde gris oscuro */
-  padding: 8px 16px; /* Espaciado interno */
-  border-radius: 5px; /* Bordes redondeados */
-  font-size: 14px; /* Tamaño del texto */
-  font-weight: bold; /* Texto en negrita */
-  cursor: pointer; /* Cambiar cursor al pasar */
-  transition: all 0.3s ease; /* Suavizar cambios de estado */
+  background-color: #ffffff;
+  color: #4f4f4f;
+  border: 2px solid #4f4f4f;
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 nav .nav-button:hover {
-  background-color: #292929; /* Cambiar fondo a gris oscuro al pasar el cursor */
-  color: #ffffff; /* Cambiar texto a blanco */
-  border-color: #3a3a3a; /* Cambiar el borde a un gris más oscuro */
+  background-color: #292929;
+  color: #ffffff;
+  border-color: #3a3a3a;
 }
 
 nav .nav-button:active {
-  transform: scale(0.95); /* Botón se achica ligeramente al hacer clic */
+  transform: scale(0.95);
 }
 
+
+
 .container {
-  max-width: 1000px; /* Ancho máximo del formulario */
-  margin: 20px auto; /* Centramos la sección en la página y añadimos margen superior */
+  min-width: 320px;
+  max-width: 1000px;
+  margin: 20px auto;
   margin-top: 5%;
   padding: 20px;
-  background-color: #f9f9f9; /* Fondo claro */
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form {
+  
+  min-width: 500px;
+  
 }
 
 h2 {
-  text-align: center; /* Centrar el título */
-  color: #333; /* Color del título */
+  text-align: center;
+  color: #333;
   margin-bottom: 20px;
 }
 
 .form-label {
-  display: block; /* Aseguramos que las etiquetas estén encima de los inputs */
+  display: block;
   margin-bottom: 5px;
   font-weight: bold;
-  color: #555; /* Color para las etiquetas */
+  color: #555;
 }
 
 .form-control {
-  width: 95%; /* Inputs ocupan el ancho completo */
+  width: 95%;
   padding: 10px;
-  border: 1px solid #ccc; /* Borde gris claro */
-  border-radius: 5px; /* Bordes redondeados */
+  border: 1px solid #ccc;
+  border-radius: 5px;
   font-size: 14px;
-  margin-bottom: 15px; /* Espaciado entre campos */
+  margin-bottom: 15px;
 }
 
 .form-control:focus {
   outline: none;
-  border-color: #007bff; /* Azul al enfocar */
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra azul clara */
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 textarea.form-control {
-  resize: vertical; /* Permitir redimensionar verticalmente */
+  resize: vertical;
 }
 
 button.btn-primary {
-  display: block; /* Centrar botón */
-  width: 100%; /* Ocupa el ancho completo */
+  display: block;
+  width: 100%;
   padding: 10px;
   font-size: 16px;
-  background-color: #007bff; /* Fondo azul */
-  color: #fff; /* Texto blanco */
+  background-color: #007bff;
+  color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -107,30 +129,29 @@ button.btn-primary {
 }
 
 button.btn-primary:hover {
-  background-color: #0056b3; /* Azul más oscuro al pasar el cursor */
+  background-color: #0056b3;
 }
 
 button.btn-primary:active {
-  transform: scale(0.98); /* Ligeramente más pequeño al hacer clic */
+  transform: scale(0.98);
 }
 
 .alert {
-  color: #d9534f; /* Rojo claro para errores */
+  color: #d9534f;
   font-size: 14px;
   margin-top: -10px;
   margin-bottom: 10px;
 }
 
-
 .makes-grid {
   display: flex;
-  flex-wrap: wrap; /* Permite que los elementos salten a una nueva fila */
-  gap: 20px; /* Espaciado entre los elementos */
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .make-item {
-  flex: 0 1 calc(50% - 10px); /* Ocupa el 50% del ancho menos el espacio del gap */
-  box-sizing: border-box; /* Asegura que el padding y border no alteren el tamaño */
+  flex: 0 1 calc(50% - 10px);
+  box-sizing: border-box;
   background-color: #f9f9f9;
   padding: 10px;
   border: 1px solid #ddd;
@@ -138,18 +159,15 @@ button.btn-primary:active {
   border-radius: 5px;
 }
 
-/* Contenedor de filtros */
 .filter-container {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
-  justify-content: space-between; /* Asegura que el espacio entre elementos sea equilibrado */
-  align-items: center; /* Centra verticalmente los elementos */
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* Estilo de los inputs de filtro */
 .filter-container .form-control {
-  
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -157,7 +175,6 @@ button.btn-primary:active {
   margin: 0;
 }
 
-/* Estilo del botón de submit */
 .filter-container .btn-primary {
   padding: 10px 20px;
   background-color: #007bff;
@@ -169,20 +186,68 @@ button.btn-primary:active {
   transition: background-color 0.3s ease;
 }
 
-/* Efecto hover en el botón */
 .filter-container .btn-primary:hover {
   background-color: #0056b3;
 }
 
-/* Efecto de clic en el botón */
 .filter-container .btn-primary:active {
   transform: scale(0.98);
 }
 
-/* Filtros cuando no están activos (opcional para mejor usabilidad) */
 .filter-container .form-control:focus {
   outline: none;
   border-color: #007bff;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
+.model-details {
+  margin-top: 15px;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.model-details p {
+  margin: 5px 0;
+}
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #555a5f;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  opacity: 0.8;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.scroll-to-top:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  margin-top: auto;
+}

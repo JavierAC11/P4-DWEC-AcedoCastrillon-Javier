@@ -102,7 +102,7 @@ const Contact = () => {
     
   
     return (
-      <div className="container mt-5">
+      <div className="container contact-form">
           <h2>Formulario de Contacto</h2>
           <form>
                   <label className="form-label">Nombre</label>

@@ -1,24 +1,26 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../context/UserContext";
 
 const Models = () => {
   const { id } = useParams();
   const [models, setModels] = useState([]);
-  
-// TODO Filtrado por traccion
   const [filteredModels, setFilteredModels] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
 
   const [filterDoors, setFilteredDoors] = useState("");
   const [filterModel, setFilterModel] = useState('');
- const [filterDrivetrain, setFilterDrivetrain] = useState('')
+  const [filterDrivetrain, setFilterDrivetrain] = useState('');
   const [filterYear, setFilterYear] = useState('');
+
+  const [selectedModel, setSelectedModel] = useState(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  const { user } = useContext(UserContext);
 
   const handleFilter = () => {
     let filteredData = models;
-
-    console.log(filterDrivetrain)
 
     if (filterModel) {
       filteredData = filteredData.filter(model =>
@@ -27,7 +29,6 @@ const Models = () => {
     }
 
     if (filterDoors) {
-
       filteredData = filteredData.filter(model =>
         model.num_doors === filterDoors
       );
@@ -40,16 +41,17 @@ const Models = () => {
     }
 
     if (filterDrivetrain) {
-      console.log(filterDrivetrain)
       filteredData = filteredData.filter(model =>
         model.drivetrain === filterDrivetrain
-      )
-      console.log(filteredData)
-
+      );
     }
 
     if (!filterModel && !filterDrivetrain && !filterYear && !filterDoors) {
-      filteredData = models
+      filteredData = models;
+    }
+
+    if (filteredData.length === 0) {
+      filteredData = [{ model_name: "No hay modelos", trim: "", id: 1 }];
     }
 
     setCurrentPage(1);
@@ -69,18 +71,35 @@ const Models = () => {
         setModels([{ model_name: "No hay modelos", trim: "", id: 1 }]);
         setFilteredModels([{ model_name: "No hay modelos", trim: "", id: 1 }]);
       }
-    }
-    
-    ;
+    };
 
     fetchModels();
   }, [id]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 200);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentModels = filteredModels.slice(indexOfFirstItem, indexOfLastItem);
 
   const totalPages = Math.ceil(filteredModels.length / itemsPerPage);
+
+  const handleModelClick = (model) => {
+    setSelectedModel(prev => (prev && prev.id === model.id ? null : model));
+  };
 
   return (
     <div className="container mt-5">
@@ -98,21 +117,11 @@ const Models = () => {
           onChange={(e) => setFilterDrivetrain(e.target.value)}
         >
           <option value="">Eje de traccion</option>
-              <option value={"RWD"}>
-                RWD
-              </option>
-              <option value={"AWD"}>
-                AWD
-              </option>
-              <option value={"FWD"}>
-                FWD
-              </option>
-              <option value={"4x4"}>
-                4x4
-              </option>
-              <option value={"4x2"}>
-                4x2
-              </option>
+          <option value="RWD">RWD</option>
+          <option value="AWD">AWD</option>
+          <option value="FWD">FWD</option>
+          <option value="4x4">4x4</option>
+          <option value="4x2">4x2</option>
         </select>
 
         <select
@@ -120,22 +129,12 @@ const Models = () => {
           value={filterDoors}
           onChange={(e) => setFilteredDoors(e.target.value)}
         >
-          <option value="">Numero de puertas</option>
-              <option value={"2"}>
-                2
-              </option>
-              <option value={"3"}>
-                3
-              </option>
-              <option value={"4"}>
-                4
-              </option>
-              <option value={"5"}>
-                5
-              </option>
-              <option value={"6"}>
-                6
-              </option>
+          <option value="">Número de puertas</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
         </select>
 
         <select
@@ -155,7 +154,7 @@ const Models = () => {
         </select>
         <button
           className="btn btn-primary"
-          onClick={handleFilter} 
+          onClick={handleFilter}
         >
           Filtrar
         </button>
@@ -167,9 +166,31 @@ const Models = () => {
         {currentModels.map((model) => (
           <div key={model.id} className="make-item">
             <h2>{`${model.model_name} ${model.trim}`}</h2>
+            <button
+              className="btn btn-info"
+              onClick={() => handleModelClick(model)}
+            >
+              Ver más
+            </button>
+
+            {user && (
+              <button className="btn btn-info">
+                Añadir a favoritos
+              </button>
+            )}
+
+            {selectedModel && selectedModel.id === model.id && (
+              <div className="model-details">
+                <p><strong>Modelo:</strong> {model.model_name}</p>
+                <p><strong>Año:</strong> {model.year}</p>
+                <p><strong>Tracción:</strong> {model.drivetrain}</p>
+                <p><strong>Puertas:</strong> {model.num_doors}</p>
+              </div>
+            )}
           </div>
         ))}
       </div>
+
       <div style={{ marginTop: "20px" }}>
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -189,6 +210,13 @@ const Models = () => {
           Siguiente
         </button>
       </div>
+
+
+      {showScrollTop && (
+        <button className="scroll-to-top" onClick={scrollToTop}>
+          ↑ Volver arriba
+        </button>
+      )}
     </div>
   );
 };

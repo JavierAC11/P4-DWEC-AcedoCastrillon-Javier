@@ -10,7 +10,7 @@ const UserProfile = () => {
   return (
     <div>
       <h1>{user.nombre}</h1>
-      <h2>{user.correo}</h2>
+      <h3>{user.correo}</h3>
       <h3>{user.telefono}</h3>
     </div>
   )
