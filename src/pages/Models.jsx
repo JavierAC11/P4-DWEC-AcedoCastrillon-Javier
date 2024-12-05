@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
+import { addFavorite } from "../config/firebase";
 
 const Models = () => {
   const { id } = useParams();
@@ -101,6 +102,24 @@ const Models = () => {
     setSelectedModel(prev => (prev && prev.id === model.id ? null : model));
   };
 
+  const handleFavorite = (modelo) => {
+    console.log(user)
+    console.log(modelo);
+    addFavorite(user.id, {
+      id: modelo.id,
+      model_name: modelo.model_name,
+      year: modelo.year,
+      drivetrain: modelo.drivetrain,
+      num_doors: modelo.num_doors,
+      trim: modelo.trim
+    }).then(() => {
+      // Aquí puedes actualizar el estado o dar retroalimentación al usuario
+      console.log("Coche añadido a favoritos");
+    }).catch((error) => {
+      console.error("Error al agregar a favoritos", error);
+    });
+  };
+
   return (
     <div className="container mt-5">
       <div className="filter-container">
@@ -174,7 +193,8 @@ const Models = () => {
             </button>
 
             {user && (
-              <button className="btn btn-info">
+              <button className="btn btn-info"
+              onClick={() => handleFavorite(model)}>
                 Añadir a favoritos
               </button>
             )}

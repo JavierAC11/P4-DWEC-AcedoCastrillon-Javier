@@ -5,6 +5,8 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "fire
 import { getFirestore } from "firebase/firestore";
 import { getDoc } from "firebase/firestore";
 import { setDoc, doc } from "firebase/firestore";
+import { arrayUnion, updateDoc } from "firebase/firestore";
+import { arrayRemove } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -62,5 +64,60 @@ export async function addElement(usuario, id) {
       console.log("Documento añadido con ID personalizado:", id);
     } catch (error) {
       console.error("Error añadiendo documento:", error);
+    }
+  }
+
+  export const addFavorite = async (userId, car) => {
+    console.log(userId, car);
+    try {
+      const userRef = doc(db, "Favoritos", userId);
+  
+      await updateDoc(userRef, {
+        cars: arrayUnion(car),
+      });
+      ;
+  
+      console.log("Coche agregado a favoritos");
+    } catch (error) {
+      console.error("Error al agregar coche a favoritos: ", error);
+    }
+  };
+
+  export const getFavorites = async (userId) => {
+    try {
+      // Referencia al documento del usuario
+      const userRef = doc(db, "Favoritos", userId);
+      
+      // Obtener el documento
+      const docSnap = await getDoc(userRef);
+      
+      if (docSnap.exists()) {
+        // Si el documento existe, devuelve los datos
+        const data = docSnap.data();
+        return data;
+      } else {
+        // Si el documento no existe, devuelve un mensaje o un valor por defecto
+        console.log("No existe el documento para el usuario proporcionado.");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error al obtener favoritos:", error);
+      return null;
+    }
+  };
+
+  export const removeFavourite = async (userId, car) => {
+    try {
+      // Obtén la referencia al documento del usuario
+      const userRef = doc(db, "Favoritos", userId);
+  
+      // Elimina el coche de la lista de favoritos
+      await updateDoc(userRef, {
+        cars: arrayRemove(car),
+      });
+  
+      console.log("Coche eliminado de favoritos");
+    } catch (error) {
+      console.error("Error al eliminar coche de favoritos: ", error);
     }
   }

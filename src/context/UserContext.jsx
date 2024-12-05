@@ -8,11 +8,13 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
+
+
   useEffect(() => { 
     onAuthStateChanged(auth, (user) => {
       if (user) {
         getDataById(user.uid).then((data) => {
-          setUser(data),
+          setUser({id: user.uid, nombre: data.nombre, correo: data.correo, telefono: data.telefono}),
           console.log(data)
         }
         )

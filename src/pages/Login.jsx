@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, Navigate } from "react-router-dom"
 import MensajeError from "../components/MensajeError"
 import { useState } from "react"
 import { useContext } from "react"
@@ -9,7 +9,7 @@ import { loginFirebase } from "../config/firebase"
 
 const Login = () => {
 
-  const { login } = useContext(UserContext)
+  const { user, login } = useContext(UserContext)
 
 
   const [datos, setDatos] = useState({
@@ -109,6 +109,7 @@ const showError = (mensaje) => {
                   {error.passwordError && <MensajeError error="La contraseña no puede estar vacia"/>}  
 
                   ¿No tienes cuenta? <Link to="/signup">Registrate</Link>
+                  {user && <Navigate to="/"/>}
 
               <p>
                 <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Enviar</button>

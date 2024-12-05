@@ -251,3 +251,42 @@ footer {
   text-align: center;
   margin-top: auto;
 }
+
+.user-profile {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.user-profile h1 {
+  color: #333;
+}
+
+.user-profile h3 {
+  color: #555;
+}
+
+.favorites-section {
+  margin-top: 30px;
+}
+
+.favorites-section h2 {
+  color: #333;
+}
+
+.favorites-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.favorites-section li {
+  background-color: #f1f1f1;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.favorites-section p {
+  color: #888;
+}
