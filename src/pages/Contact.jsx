@@ -25,7 +25,6 @@ const Contact = () => {
   
 
   /**
-   * @param {Event} e
    * 
    * Comprueba si el campo de nombre, email o mensaje están vacíos o si el email no es válido. 
    */

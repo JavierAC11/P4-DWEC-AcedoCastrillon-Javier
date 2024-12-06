@@ -8,6 +8,7 @@ const Navbar = () => {
 
     return (
         <nav className="navbar navbar-dark bg-dark">
+            {/*Se controla si es usuario esta logeado o no para mostrar uno u otro elemento en la barra de navegacion*/}
             {!user && <div>
                 <NavLink to={"/"} className="nav-button">Home</NavLink>
                 <NavLink to={"/contact"} className="nav-button">Contact</NavLink>

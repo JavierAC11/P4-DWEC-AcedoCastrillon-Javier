@@ -17,6 +17,15 @@ const Home = () => {
   const url = "https://api.fuelapi.com/v1/json";
   const token = "daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
 
+
+
+  const [makes, setMakes] = useState([]);
+  
+  // Pagina actual y elementos por pagina
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  // Función para obtener las marcas de coches
   const getMakes = async () => {
 
     const response = await fetch(url + "/makes?api_key=" + token);
@@ -24,14 +33,12 @@ const Home = () => {
     return data;
   };
 
-  const [makes, setMakes] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-
+  // Obtener las marcas al cargar el componente
   useEffect(() => {
     getMakes().then((data) => setMakes(data));
   }, []);
 
+  // Lógica de paginación
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentMakes = makes.slice(indexOfFirstItem, indexOfLastItem);
@@ -43,6 +50,7 @@ const Home = () => {
       <h1>Lista de Marcas</h1>
       <div className="makes-grid">
 
+      {/* Mapeo de las marcas */}
       {currentMakes.map((make) => (
           <div key={make.id} className="make-item">
             <Link to={`/models/${make.name}`}>

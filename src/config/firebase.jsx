@@ -37,6 +37,7 @@ export const logOut = () => signOut(auth);
 
 const db = getFirestore(app);
 
+// Obtener datos de un usuario por ID
 export async function getDataById(id) {
   try {
     const docRef = doc(db, "Usuarios", id);
@@ -54,6 +55,7 @@ export async function getDataById(id) {
 
 }
 
+// Añadir un documento a la colección "Usuarios"
 export async function addElement(usuario, id) {
     try {
       await setDoc(doc(db, "Usuarios", id), {
@@ -67,15 +69,24 @@ export async function addElement(usuario, id) {
     }
   }
 
+  // Añadir un coche a la colección "Favoritos" de un usuario
   export const addFavorite = async (userId, car) => {
     console.log(userId, car);
+  
     try {
       const userRef = doc(db, "Favoritos", userId);
   
-      await updateDoc(userRef, {
-        cars: arrayUnion(car),
-      });
-      ;
+      const docSnap = await getDoc(userRef);
+  
+      if (docSnap.exists()) {
+        await updateDoc(userRef, {
+          cars: arrayUnion(car),
+        });
+      } else {
+        await setDoc(userRef, {
+          cars: [car],
+        });
+      }
   
       console.log("Coche agregado a favoritos");
     } catch (error) {
@@ -83,20 +94,17 @@ export async function addElement(usuario, id) {
     }
   };
 
+  // Obtener favoritos de un usuario
   export const getFavorites = async (userId) => {
     try {
-      // Referencia al documento del usuario
       const userRef = doc(db, "Favoritos", userId);
       
-      // Obtener el documento
       const docSnap = await getDoc(userRef);
       
       if (docSnap.exists()) {
-        // Si el documento existe, devuelve los datos
         const data = docSnap.data();
         return data;
       } else {
-        // Si el documento no existe, devuelve un mensaje o un valor por defecto
         console.log("No existe el documento para el usuario proporcionado.");
         return null;
       }
@@ -106,12 +114,12 @@ export async function addElement(usuario, id) {
     }
   };
 
-  export const removeFavourite = async (userId, car) => {
+
+// Eliminar un coche de la colección "Favoritos" de un usuario
+  export const removeFavorite = async (userId, car) => {
     try {
-      // Obtén la referencia al documento del usuario
       const userRef = doc(db, "Favoritos", userId);
   
-      // Elimina el coche de la lista de favoritos
       await updateDoc(userRef, {
         cars: arrayRemove(car),
       });

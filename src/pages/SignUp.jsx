@@ -1,9 +1,12 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import MensajeError from "../components/MensajeError"
 import Swal from 'sweetalert2'
-import { addElement, loginFirebase, registro } from "../config/firebase"
+import { addElement, getDataById, loginFirebase, registro } from "../config/firebase"
+import { UserContext } from "../context/UserContext"
 
 const SignUp = () => {
+
+  const { setUser } = useContext(UserContext)
 
   const [error, setError] = useState({
     nombreError: false,
@@ -184,6 +187,10 @@ const showError = (mensaje) => {
         await registro({email: form.email, password: form.password})
         const user = await loginFirebase({email: form.email, password: form.password})
         addElement({nombre: form.nombre, correo: form.email, telefono: form.numero}, user.user.uid)
+        getDataById(user.user.uid).then((data) => {
+          setUser(data)
+        })
+
         setForm({
           nombre: "",
           email: "",

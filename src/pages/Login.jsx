@@ -9,8 +9,8 @@ import { loginFirebase } from "../config/firebase"
 
 const Login = () => {
 
-  const { user, login } = useContext(UserContext)
 
+  const { user, login } = useContext(UserContext)
 
   const [datos, setDatos] = useState({
     email: "",
@@ -22,6 +22,7 @@ const Login = () => {
     passwordError: false
   })
 
+  // Hace el login con el correo y la contraseña y comprueba si el correo no esta registrado o la contraseña es incorrecta
   const handleSubmit = async (e) => {
     e.preventDefault()
     login({email: datos.email, password: datos.password})
@@ -40,8 +41,7 @@ const Login = () => {
     }
   }
 
-  // Prueba1*
-
+  // Validacion de formulario
   const handleChange = (e) => {
     if (e.target.name === "email") {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

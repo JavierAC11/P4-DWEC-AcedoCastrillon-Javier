@@ -2,10 +2,9 @@ import { useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import { getFavorites } from "../config/firebase";
 import { useState } from "react";
-import { removeFavourite } from "../config/firebase";
+import { removeFavorite } from "../config/firebase";
 
 const UserProfile = () => {
-  // Accediendo tanto al usuario como a los favoritos del contexto
   const { user } = useContext(UserContext);
 
   const [favoritos, setFavoritos ] = useState()
@@ -19,16 +18,9 @@ const UserProfile = () => {
 
   const handleRemoveFavorite = (car) => {
     console.log("Eliminando favorito:", car);
-    removeFavourite(user.id, car);
+    removeFavorite(user.id, car);
     setFavoritos()
   };
-
-
-  if (favoritos){
-  favoritos.cars.map((car) => 
-  console.log(car))
-  }
-
 
   return (
     <div className="user-profile">

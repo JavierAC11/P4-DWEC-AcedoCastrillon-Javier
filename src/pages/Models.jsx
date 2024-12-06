@@ -4,22 +4,32 @@ import { UserContext } from "../context/UserContext";
 import { addFavorite } from "../config/firebase";
 
 const Models = () => {
+  // Obtenemos el id de la marca de la URL
   const { id } = useParams();
+
   const [models, setModels] = useState([]);
+
+  // Models que se muestran en la página
   const [filteredModels, setFilteredModels] = useState([]);
+  
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
 
-  const [filterDoors, setFilteredDoors] = useState("");
+  // Filtros de búsqueda en uso
+  const [filterDoors, setFilteredDoors] = useState('');
   const [filterModel, setFilterModel] = useState('');
   const [filterDrivetrain, setFilterDrivetrain] = useState('');
   const [filterYear, setFilterYear] = useState('');
 
+  // Modelo seleccionado para mostrar detalles
   const [selectedModel, setSelectedModel] = useState(null);
+
+  // Mostrar botón para volver arriba
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   const { user } = useContext(UserContext);
 
+  // Función filtar modelos, si no hay ningún filtro, se muestran todos los modelos
   const handleFilter = () => {
     let filteredData = models;
 
@@ -59,6 +69,7 @@ const Models = () => {
     setFilteredModels(filteredData);
   };
 
+  // Obtenemos los modelos de la marca al actualizar el id
   useEffect(() => {
     const fetchModels = async () => {
       try {
@@ -77,6 +88,7 @@ const Models = () => {
     fetchModels();
   }, [id]);
 
+  // Mostrar botón para volver arriba al hacer scroll, se carga una sola vez
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 200);
@@ -88,20 +100,24 @@ const Models = () => {
     };
   }, []);
 
+  // Función para volver arriba
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // Lógica de paginación
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentModels = filteredModels.slice(indexOfFirstItem, indexOfLastItem);
 
   const totalPages = Math.ceil(filteredModels.length / itemsPerPage);
 
+  // Función para mostrar detalles del modelo
   const handleModelClick = (model) => {
     setSelectedModel(prev => (prev && prev.id === model.id ? null : model));
   };
 
+  // Función para añadir un modelo a favoritos
   const handleFavorite = (modelo) => {
     console.log(user)
     console.log(modelo);
@@ -112,11 +128,6 @@ const Models = () => {
       drivetrain: modelo.drivetrain,
       num_doors: modelo.num_doors,
       trim: modelo.trim
-    }).then(() => {
-      // Aquí puedes actualizar el estado o dar retroalimentación al usuario
-      console.log("Coche añadido a favoritos");
-    }).catch((error) => {
-      console.error("Error al agregar a favoritos", error);
     });
   };
 
@@ -191,7 +202,7 @@ const Models = () => {
             >
               Ver más
             </button>
-
+            {/* Si el usuario no está logueado no se mostrara el boton de favoritos */}
             {user && (
               <button className="btn btn-info"
               onClick={() => handleFavorite(model)}>
@@ -199,6 +210,7 @@ const Models = () => {
               </button>
             )}
 
+          {/* Se muestran los detalles si le has dado al boton de ver mas */}
             {selectedModel && selectedModel.id === model.id && (
               <div className="model-details">
                 <p><strong>Modelo:</strong> {model.model_name}</p>
