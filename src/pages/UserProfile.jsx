@@ -5,10 +5,12 @@ import { useState } from "react";
 import { removeFavorite } from "../config/firebase";
 
 const UserProfile = () => {
+
   const { user } = useContext(UserContext);
 
   const [favoritos, setFavoritos ] = useState()
 
+  // Obtenemos los favoritos del usuario y los guardamos en el estado cuando se actualiza favoritos 
   useEffect(() => {
     getFavorites(user.id).then((data) => {
       setFavoritos(data)
@@ -24,12 +26,10 @@ const UserProfile = () => {
 
   return (
     <div className="user-profile">
-      {/* Información del Usuario */}
       <h1>{user.nombre}</h1>
       <h3>{user.correo}</h3>
       <h3>{user.telefono}</h3>
 
-      {/* Lista de Favoritos */}
       <div >
         <h2>Mis Favoritos</h2>
         

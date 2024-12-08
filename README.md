@@ -1,103 +1,138 @@
-## Segunda entrega
-### Estructura del Proyecto
-
-El proyecto está organizado de la siguiente manera:
-
-- `src/`
-    - `components/`: Contiene los componentes reutilizables de la aplicación.
-    - `layouts/`: Incluye los diseños y estructuras de página, que contendrá una para cuando esté iniciada la sesión del ususario y otra para cuando no.
-    - `pages/`: Contiene las diferentes páginas de la aplicación.
-    - `router/`: Maneja las rutas de la aplicación.
-    - `index.css`: Archivo de estilos globales.
-    - `main.jsx`: Punto de entrada principal de la aplicación.
-
-### Components
-
-Se han creado 2 componentes reutilizables:
-- `MensajeError`: este se usará cuando se validen los formularios y no sea correcto lo introducido en el saldrá debajo este mensaje.
-- `Navbar`: es una barra de navegación que se usara en todas las páginas
-
-### Layouts
-
-Se ha creado el layout público para cuando no se ha iniciado sesión, más para adelante se creará el privado.
-
-### Pages
-
-Se han creado todas las páginas pero esta entrega está centrada en la de `Contact` con la validación del formulario.
-
-### Router
-
-Se han enrutado todas las páginas de proyecto con React Router, en caso de error te saltará una página con un enlace para ir al inicio. Por ahora no están las rutas protegidas, se implementará próximamente.
-
-## Tercera entrega
+# **Aplicación de Gestión de Favoritos**
+### 1. [Descripción General](#descripción-general)
+### 2. [Funcionalidades Clave](#funcionalidades-clave)
+### 3. [Cómo Ejecutar la Aplicación](#cómo-ejecutar-la-aplicación)
+### 4. [Tecnologías Utilizadas](#tecnologías-utilizadas)
+### 5. [Pantallas](#pantallas)
+### 6. [Reflexión](#reflexión)
+### 7. [Enlace al despliegue](#enlace-al-despliegue)
 
 
-### Navbar
+## **Descripción General**
+Esta aplicación permite a los usuarios explorar modelos de coches, filtrarlos por diversas características y agregar sus modelos favoritos a una lista personalizada almacenada en **Cloud Firestore**. Entre las principales funcionalidades destacan:
 
 
-En el navbar se ha incluido que depende del contexto (lo explicaré más para adelante) te aparecen unos botones u otros.
+- **Exploración de modelos:** Los usuarios pueden filtrar modelos por año, número de puertas, tracción y nombre del modelo.
+- **Gestión de favoritos:** Los usuarios pueden añadir y eliminar modelos de su lista de favoritos, la cual se sincroniza en tiempo real con Firestore.
+- **Paginación dinámica:** Navegación eficiente a través de una lista de modelos utilizando un sistema de paginación.
+- **Autenticación:** Los usuarios se autentican utilizando **Firebase Authentication** mediante correo electrónico y contraseña
 
 
-### config/firebase
+---
 
 
-Es la configuración de la autentificación de usuarios de la aplicación
+## **Funcionalidades Clave**
 
 
-### context/UserContext
 
 
-Controla si en la aplicación hay un usuario logueado y ayuda cuando se hace el login, un registro o un logOut
+- **Añadir a favoritos:** Los usuarios pueden guardar modelos de automóviles en favoritos.
+- **Eliminación de favoritos:** Los usuarios pueden eliminar modelos de sus favoritos reflejándose tanto en Firestore como en la interfaz.
+- **Filtros dinámicos:** Filtrado eficiente de los modelos de automóviles.
 
 
-### LayoutPrivate
+---
 
 
-Se ha añadido un Layout para cuando se esta la sesion iniciada y si no tienes sesion iniciada e intentas entrar se volverá automáticamente a la página de inicio
+## **Cómo Ejecutar la Aplicación**
 
 
-### Models
+1. **Clonar el repositorio**:
+Una vez ya dentro del repositorio instalamos el proyecto:
+  ```bash
+  npm install
+  ```
+2. **Configuración de firebase**
+- Crea un proyecto en firebase
+- Crea la autentificación y el FireStore
+- Una vez creado el fireStore añadimos 2 colecciones una llamada "Usuarios" y otra "Favoritos"
+- Crea un archivo .env en la raíz del proyecto y añade las credenciales de Firebase:
+```env
+REACT_APP_FIREBASE_API_KEY=tu-api-key
+REACT_APP_FIREBASE_AUTH_DOMAIN=tu-auth-domain
+REACT_APP_FIREBASE_PROJECT_ID=tu-project-id
+REACT_APP_FIREBASE_STORAGE_BUCKET=tu-storage-bucket
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=tu-sender-id
+REACT_APP_FIREBASE_APP_ID=tu-app-id
+```
+3. **Iniciar el servidor de desarrollo:**
+```bash
+npm run dev
+```
+## **Tecnologías Utilizadas**
 
 
-Esta pagina simplemente se añadido al proyecto pero todavía hay que implementarla junto a todas sus funcionalidades
+### **Frontend**
 
 
-### Home
+- **React**: Biblioteca de JavaScript para la construcción de interfaces de usuario interactivas.
+- **React Router**: Gestión de rutas para una navegación fluida entre las páginas.
+- **CSS**: La aplicación tiene un pequeño css sencillo
 
 
-En esta pagina que seria la pagina principal de la aplicación ya aparecen un listado paginado de las marcas que nos devuelve la API
+### **Backend**
 
 
-### Login y SignUp
+- **Firebase Firestore**: Base de datos en tiempo real para almacenamiento de datos.
+- **Firebase Authentication**: Gestión de autenticación de usuarios.
 
 
-Ya implementan el contexto y realizan el login y el registro de usuarios
+## **Pantallas**
 
 
-### router/index
-
-Se ha implementado el lazy load en las paginas las cuales no tienen porque cargar cuando se inicia la aplicación o que no son tan relevantes y se ha implementado el layoutPrivate junto al UserProfile
-
-### Captura de la llamada asincrona
-
-![alt text](image.png)
-
-Aquí se usa la llamada asíncrona para obtener un JSON con todos los datos de las marcas.
+### **Home**
 
 
-![alt text](image-1.png)
+Esta pantalla tiene una lista de las marcas de coche con una paginación, haciendole click a cada una de las marcas te redirige a la página de todos los modelos de esta marca
 
 
-Aquí se guardan las marcas en un estado al iniciar la página.
+### **Contact**
 
 
-![alt text](image-2.png)
+Hay un formulario validado para que los usuarios puedan ponerse en contacto con la empresa.
 
 
-Aquí se muestra en el HTML
+### **Login**
 
 
-![alt text](image-3.png)
+Página para que el usuario con una cuenta creada pueda loguearse en la aplicación, ver su cuenta y añadir modelos a favoritos.
 
 
-Aqui esta el ejemplo de la aplicación con la lista de marcas
+### **Models**
+
+
+Tiene la vista de todos los modelos de cada marca con las funciones de ver más información de cada modelo, un filtrado de los modelos y añadir a favoritos.
+
+
+### **NotFound**
+
+
+Página por si hay un error en la ruta de la aplicación
+
+
+### **Signup**
+
+
+Página de registro del usuario que guarda la información en la base de datos y crea el usuario.
+
+
+### **UserProfile**
+
+
+Página para mostrar la información de un usuario logueado incluyendo los modelos guardados en favoritos.
+
+
+## **Reflexión**
+
+
+Con este proyecto he asentado más los conocimientos de React, también he aprendido el uso de base de datos con Firebase.
+
+
+Con el uso de la API tuve un problema con el cliente ya que al cargar todos los datos no me cargaba, ese problema lo solucione cargando primero las marcas y una vez cargadas ya meterme los modelos de cada una de ellas.
+
+
+Personalmente una de las cosas que mejoraría del proyecto es la implementación de Material UI para que se vea de una manera más bonita la aplicación.
+
+## **Enlace al despliegue**
+
+[https://p4-dwec.netlify.app/](https://p4-dwec.netlify.app/)

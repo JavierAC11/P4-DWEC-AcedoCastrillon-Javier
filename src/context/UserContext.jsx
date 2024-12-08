@@ -14,9 +14,8 @@ export const UserProvider = ({ children }) => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         getDataById(user.uid).then((data) => {
-          console.log(data)
           setUser({id: user.uid, nombre: data.nombre, correo: data.correo, telefono: data.telefono})
-        }
+          }
         )
       } else {
         setUser(null)

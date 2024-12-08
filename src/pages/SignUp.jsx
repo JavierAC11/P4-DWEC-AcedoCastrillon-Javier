@@ -3,10 +3,11 @@ import MensajeError from "../components/MensajeError"
 import Swal from 'sweetalert2'
 import { addElement, getDataById, loginFirebase, registro } from "../config/firebase"
 import { UserContext } from "../context/UserContext"
+import { Navigate } from "react-router-dom"
 
 const SignUp = () => {
 
-  const { setUser } = useContext(UserContext)
+  const { user, setUser } = useContext(UserContext)
 
   const [error, setError] = useState({
     nombreError: false,
@@ -182,6 +183,7 @@ const showError = (mensaje) => {
     if(form.nombre === "" || form.email === "" || form.numero === "" || form.fecha === "" || form.password === "" || form.terminos === false){
       showError("Todos los campos son obligatorios")
     }
+    // hace el registro de usuario y el login, tambien añade los datos a la base de datos y limpia los campos
     else{
       try {
         await registro({email: form.email, password: form.password})
@@ -215,6 +217,7 @@ const showError = (mensaje) => {
         document.getElementById("terminos").checked = false;
       }
       catch(error){
+        // muestra un mensaje de error si el correo ya esta en uso
         if(error.code === "auth/email-already-in-use"){
           showError("El correo ya esta en uso")
         }
@@ -257,7 +260,7 @@ const showError = (mensaje) => {
                 Acepto los <a href="#" target="_blank">términos y condiciones</a>
                 </label>
                 {error.terminosError && <MensajeError error="Tienes que aceptar los terminos"/>}
-
+                {user && <Navigate to="/"/>}
                 <p>
               <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Enviar</button>
               </p>
